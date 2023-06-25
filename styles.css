@@ -1,0 +1,30 @@
+:root {
+    --accent-color: #f1dac4;
+}
+
+body {
+    background-color: #232323;
+}
+
+h1 {
+    color: #f1dac4;
+    font-family: 'Helvetica';
+    text-align: left;
+    font-size: 100px;
+    font-weight: bold;
+}
+
+h2 {
+    color: #f1dac4;
+    font-family: 'Helvetica';
+    text-align: left;
+    font-size: 100px;
+}
+
+p {
+    color: #a69cac;
+    font-family: 'Courier New', serif;
+    text-align: left;
+    font-size: 30px;
+    position: relative;
+}

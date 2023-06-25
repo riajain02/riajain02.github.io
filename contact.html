@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+
+<head>
+    <title>Contact Me: Ria's Online Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Aboreto' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="/images/page-icon.png">
+    
+    <style>
+        
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+    function changeImage(id, img) {
+        document.getElementById(id).src = img;
+    }
+
+    $(document).ready(function(){
+        $(document).mousemove(function(){
+            if($("#home-sign:hover").length != 0){
+                changeImage('home-image', './images/RJ-hover-indigo.png')
+            } else {
+                changeImage('home-image', './images/RJ.png')
+            }
+        });
+    });
+    </script>   
+
+</head>
+
+<body>
+    <span id="home-sign">
+        <a href = "./index.html">
+            <img src="./images/RJ.png" id="home-image" width = 214 height = 120 style="position:absolute; top: 10px; left: -35px">
+        </a>
+    </span>
+    <div style="position:relative; left:15%;">
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1 style="font-family: 'Courier New', serif; font-size:85px;">
+            contact me
+        </h1>
+        <br>
+        <div width=80% style="width:80%;">
+            <p style="font-family: 'Helvetica'; font-size:25px;">
+                Feel free to reach out, and I'd be happy to chat.                
+            </p>
+        </div>
+    </div>
+    <br>
+    <div>
+        <div style="position:relative; left:15%">
+            <img src='./images/location.png' width=35 style="position:relative; left:12px"/>
+            <span style="position:relative; top:-15px; left: 5%; font-family: 'Helvetica'; font-size:20px; color:#a69cac;">
+                Dublin, CA
+            </span>
+        </div>
+        <br>
+        <div style="position:relative; left:15%">
+            <img src='./images/git.png' width=50 style="position:relative; left:5px"/>
+            <span style="position:relative; top:-15px; left: 4.2%; font-family: 'Helvetica'; font-size:20px; color:#a69cac;">
+                <a style="text-decoration: none" href="https://github.com/riajain02">@riajain02</a>
+            </span>
+        </div>
+        <br>
+        <div style="position:relative; left:15%">
+            <img src='./images/email.png' width=60 style="position:relative; left:0px"/>
+            <span style="position:relative; top:-10px; left: 3.9%; font-family: 'Helvetica'; font-size:20px; color:#a69cac;">
+                <a style="text-decoration: none" href="mailto:riajain3878@gmail.com">riajain3878@gmail.com (personal)</a>
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                &nbsp;
+                <a style="text-decoration: none" href="mailto:ria.jain@berkeley.edu">ria.jain@berkeley.edu (school)</a>
+            </span>
+        </div>
+        <br>
+        <div style="position:relative; left:15%">
+            <img src='./images/instagram.png' width=50 style="position:relative; left:5px"/>
+            <span style="position:relative; top:-15px; left: 4.4%; font-family: 'Helvetica'; font-size:20px; color:#a69cac;">
+                <a style="text-decoration: none" href="https://www.instagram.com/_riajainn/">@_riajainn</a>
+            </span>
+        </div>
+        <br>
+        <div style="position:relative; left:15%">
+            <img src='./images/phone.png' width=30 style="position:relative; left:15px"/>
+            <span style="position:relative; top:-15px; left: 5.4%; font-family: 'Helvetica'; font-size:20px; color:#a69cac;">
+                (925)-872-7847
+            </span>
+        </div>
+        <br>
+        <div style="position:relative; left:15%">
+            <img src='./images/linkedin.png' width=50 style="position:relative; left:5px"/>
+            <span style="position:relative; top:-15px; left: 4.2%; font-family: 'Helvetica'; font-size:20px; color:#a69cac;">
+                <a style="text-decoration: none" href="https://www.linkedin.com/in/ria-jain-6baaa41b3/">[Profile]</a>
+            </span>
+        </div>
+        
+    </div>
+
+    
+
+</body>
+
+</html>

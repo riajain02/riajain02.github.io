@@ -1,0 +1,180 @@
+<!DOCTYPE html />
+<html>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css" />
+
+<head>
+    <title>Home: Ria's Online Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Peta:wght@200&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+
+    <link href='https://fonts.googleapis.com/css?family=Aboreto' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+    <link rel="icon" type="image/x-icon" href="/images/page-icon.png">
+    
+    <!-- link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"-->
+    <style>
+        .accent {
+            background-color: #FAF6F2;
+            display:inline-block;
+            width:100%;
+            height: 15px;
+            margin-top: 5px;
+        }
+        .title-text {
+            font-family:'Aboreto';
+            font-size:40px;
+            color:#4E4343;
+            text-align: center;
+            margin-top:250px; 
+        }
+        .subtitle {
+            font-family:'Abel';
+            font-size:20px;
+            color:#FAF6F2;
+            text-align: center;
+            background:#4E4343;
+            letter-spacing: 10px;
+        }
+        .social {
+            font-family:'Abel';
+            margin-top:200px;
+            font-size:20px;
+        }
+
+
+        .wrap {
+            width: 55%;
+            font-size: 25px;
+            font-family:Helvetica;
+            position: relative;
+            top: -40px;
+            left:40%;
+            color: #a69cac;
+        }
+    </style>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+    function changeImage(id, img) {
+        document.getElementById(id).src = img;
+    }
+
+    $(document).ready(function(){
+        $(document).mousemove(function(){
+            if($("#abt-image-div:hover").length != 0){
+                changeImage('abt-image', './images/about.png')
+            } else if($("#proj-image-div:hover").length != 0){
+                changeImage('proj-image', './images/projects.png')
+            } else if($("#exp-image-div:hover").length != 0){
+                changeImage('exp-image', './images/experience.png')
+            } else if($("#contact-image-div:hover").length != 0){
+                changeImage('contact-image', './images/contact.png')
+            } else if($("#home-image-div:hover").length != 0){
+                changeImage('home-image', './images/RJ-hover-blue.png')
+            } else {
+                changeImage('abt-image', './images/about-plain.png')
+                changeImage('exp-image', './images/experience-plain.png')
+                changeImage('proj-image', './images/projects-plain.png')
+                changeImage('contact-image', './images/contact-plain.png')
+                changeImage('home-image', './images/RJ.png')
+            }
+        });
+    });
+    
+    </script>
+
+</head>
+
+<body>
+    <div style="height:100%; width:100%">
+        <div style="background-color: #192841;"> <!--#192841-->
+
+            <br>
+
+            <!--
+                <span id="abt-image-div">
+                    <a href="./about.html">
+                        <img src="./images/about-plain.png" id="abt-image" width = 240 height = 270 style="position:relative; left:16%;">
+                    </a>
+                </span>
+            -->
+            <span id="home-image-div">
+                <a href = "./index.html">
+                    <img src="./images/RJ.png" id="home-image" width = 214 height = 120 style="position:absolute; top: 10px; left: -35px">
+                </a>
+            </span>
+
+            <img src="./images/pfp.png" width = 700 height = 400 style="position:absolute; left:5%; top: 5%;">
+            
+            <p style="top: 30px; left: 40%;">
+                hello, i'm
+            </p>
+
+            <h1 style="position: relative; top:-20px; left:43%;">
+                Ria Jain.
+            </h1>
+
+            <p style="font-size: 30px; font-family:Helvetica; position: relative; top: -75px; left:43%; width: 55%;">
+                Electrical Engineering & Computer Science Student
+            </p>
+
+            <p class="wrap">
+                <span>I am a curious and enthusiastic individual who is passionate about developing</span>
+                <span style="font-family: 'Courier New', Courier, monospace; color:#FAF6F2; font-weight: bold;"> innovative </span>
+                <span>solutions to</span>
+                <span style="font-family: 'Courier New', Courier, monospace; color:#FAF6F2; font-weight: bold;"> challenging real-world problems </span>
+                <span>using</span>               
+                <span style="font-family: 'Courier New', Courier, monospace; color:#FAF6F2; font-weight: bold;"> cutting-edge </span>
+                <span>technology.</span>
+            </p>
+            <br>
+            <br>
+        </div>
+
+        <div style="background-color:#f1dac4; height:2px;">
+            &nbsp;
+        </div>
+
+        <div width=100%>
+            <div>
+                <h2 style="color:f1dac4; font-size:25px; position:relative; left:16%;">
+                    Learn more about:
+                </h2>
+            </div>
+            <span id="abt-image-div">
+                <a href="./about.html">
+                    <img src="./images/about-plain.png" id="abt-image" width = 240 height = 270 style="position:relative; left:16%;">
+                </a>
+            </span>
+            <span id="exp-image-div">
+                <a href="./experience.html">
+                    <img src="./images/experience-plain.png" id="exp-image" width = 240 height = 270 style="position:relative; left:22%;">
+                </a>
+            </span>
+            <span id="proj-image-div">
+                <a href="./projects.html">
+                    <img src="./images/projects-plain.png" id="proj-image" width = 240 height = 270 style="position:relative; left:30%;">
+                </a>
+            </span>
+            <span id="contact-image-div">
+                <a href="./contact.html">
+                    <img src="./images/contact-plain.png" id="contact-image" width = 240 height = 270 style="position:relative; left:38%;">
+                </a>
+            </span>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</body>
+</html>

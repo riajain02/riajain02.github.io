@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+
+<head>
+    <title>Projects: Ria's Online Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Aboreto' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="/images/page-icon.png">
+    
+    <style>
+        
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+    function changeImage(id, img) {
+        document.getElementById(id).src = img;
+    }
+
+    function changeBackground(id, color) {
+        document.getElementById(id).style.backgroundColor = color; 
+    }
+
+    $(document).ready(function(){
+        $(document).mousemove(function(){
+            if($("#home-sign:hover").length != 0){
+                changeImage('home-image', './images/RJ-hover-indigo.png')
+            } else if($("#gwl:hover").length != 0){
+                changeBackground("gwl", '#192841');
+            } else if($("#dengue:hover").length != 0){
+                changeBackground("dengue", '#192841');
+            } else if($("#rpi-car:hover").length != 0){
+                changeBackground("rpi-car", '#192841');
+            } else if($("#eluo:hover").length != 0){
+                changeBackground("eluo", '#192841');
+            } else if($("#invictus:hover").length != 0){
+                changeBackground("invictus", '#192841');
+            } else if($("#scheme:hover").length != 0){
+                changeBackground("scheme", '#192841');
+            } else if($("#deque:hover").length != 0){
+                changeBackground("deque", '#192841');
+            } else if($("#timer:hover").length != 0){
+                changeBackground("timer", '#192841');
+            } else if($("#chatbot:hover").length != 0){
+                changeBackground("chatbot", '#192841');
+            } else if($("#sra:hover").length != 0){
+                changeBackground("sra", '#192841');
+            } else if($("#mario:hover").length != 0){
+                changeBackground("mario", '#192841');
+            } else if($("#bmei:hover").length != 0){
+                changeBackground("bmei", '#192841');
+            } else if($("#rand-num:hover").length != 0){
+                changeBackground("rand-num", '#192841');
+            } else if($("#titanic:hover").length != 0){
+                changeBackground("titanic", '#192841');
+            } else if($("#world:hover").length != 0){
+                changeBackground("world", '#192841');
+            } else {
+                changeImage('home-image', './images/RJ.png')
+                changeBackground("gwl", '#232323');
+                changeBackground("dengue", '#232323');
+                changeBackground("rpi-car", '#232323');
+                changeBackground("eluo", '#232323');
+                changeBackground("invictus", '#232323');
+                changeBackground("scheme", '#232323');
+                changeBackground("deque", '#232323');
+                changeBackground("timer", '#232323');
+                changeBackground("chatbot", '#232323');
+                changeBackground("sra", '#232323');
+                changeBackground("mario", '#232323');
+                changeBackground("bmei", '#232323');
+                changeBackground("rand-num", '#232323');
+                changeBackground("titanic", '#232323');
+                changeBackground("world", '#232323');
+            }
+        });
+    });
+    </script> 
+</head>
+
+<body>
+    <span id="home-sign">
+        <a href = "./index.html">
+            <img src="./images/RJ.png" id="home-image" width = 214 height = 120 style="position:absolute; top: 10px; left: -35px">
+        </a>
+    </span>
+    <div style="position:relative; left:15%;">
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1 style="font-family: 'Courier New', serif; font-size:85px;">
+            projects
+        </h1>
+        <br>
+
+        <div style="display: inline-block; width:35%;">
+
+            <div id="gwl" style="border-style: outset; border-color: #a69cac;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/gwl.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #B1C6D9; font-size:15px;">&nbsp;&nbsp;&nbsp;[machine learning]</span> 
+                        <div style="font-family: 'Courier New'; color: #F5D6D2; font-size:25px; position:relative; left:30px;"><b>groundwater level forecasting</b></div>
+                        <span style="font-family: 'Courier New'; color: #B1C6D9; font-size:17px;">&nbsp;&nbsp; summer 2021</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Implemented and compared performance of various neural network models (FNN, RNN, LSTM, CNN).
+                            Tested a novel technique that improved model performance for one-month ahead groundwater level predictions by over 10%.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Python, TensorFlow, Keras, Matplotlib
+                        </div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br> 
+            <div id="dengue" style="border-style: outset; border-color: #a69cac;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/dengue.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #B1C6D9; font-size:15px;">&nbsp;&nbsp;&nbsp;[machine learning]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>dengue virus outbreak prediction</b></div>
+                        <span style="font-family: 'Courier New'; color: #B1C6D9; font-size:17px;">&nbsp;&nbsp; summer 2021</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Implemented eight different machine learning models: naive bayes, logistic regression, linear regression, support vector machine, k-NN, random forest, FNN, and LSTM.
+                            Performed classification on time-series averaged environmental data of Rio de Janeiro. Predicted chances of monthly Dengue virus outbreaks based variables such as temperature, humidity, and precipitation.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Python, TensorFlow, Keras, scikit-learn
+                        </div>
+                        <img src="./images/link.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">
+                            <a style="text-decoration: none;" href="https://www.globe.gov/documents/10157/0/10754848/f55bad22-3a73-4c87-07e0-86c78570488a">Manuscript</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://www.globe.gov/documents/10157/0/10754848/0ac91e5e-427e-3686-0a5a-5c66489e8c20">Research Poster</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://github.com/riajain02/dengue-prediction">GitHub Repo</a>
+                        </div>
+                        <img src="./images/recog.png" width=30/>
+                        <div style="position:relative; top:-29px; left:50px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">Presented at: International Virtual Science Symposium, American Geophysical Union Fall Meeting</div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br> 
+            <div id="rpi-car" style="border-style: outset; border-color: #a69cac;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/rpi-car.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #A8B690; font-size:15px;">&nbsp;&nbsp;&nbsp;[engineering]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>raspberry pi rc car</b></div>
+                        <span style="font-family: 'Courier New'; color: #A8B690; font-size:17px;">&nbsp;&nbsp; fall 2020 - spring 2022</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Built a remotely-controlled car using Raspberry Pi, equipped with GPS, compass, and camera modules.
+                            Used as a basis to explore more complex concepts like swarm robotics (multiple RC cars communicating with each other) and object detection.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Python, OpenCV, Flask, HTML, Raspberry Pi, Breadboarding
+                        </div>
+                        <img src="./images/link.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">
+                            <a style="text-decoration: none;" href="https://www.instructables.com/Remote-Controlled-Car-Using-Raspberry-Pi/">Instructables Page - includes video demonstration (10k+ views)</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://github.com/riajain02/pi0">Github Repo</a>
+                        </div>
+                        <img src="./images/recog.png" width=30/>
+                        <div style="position:relative; top:-29px; left:50px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">Instructables Featured Submission</div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br> 
+            <div id="eluo" style="border-style: outset; border-color: #a69cac;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/eluo.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:15px;">&nbsp;&nbsp;&nbsp;[software]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>eluo</b></div>
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:17px;">&nbsp;&nbsp; spring 2021</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Developed a web application that allows users to detect harmful ingredients in self-care products. Used Python to perform optical character recognition (OCR) on images of product labels.
+                            Built an accompanying Raspberry Pi camera device to physically scan products.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Tessearact OCR, Python, JAVA, OpenNLP, Flask, HTML, Raspberry Pi, Heroku
+                        </div>
+                        <img src="./images/link.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">
+                            <a style="text-decoration: none;" href="https://www.youtube.com/watch?v=ku-qOvfmtDM&feature=youtu.be">Pitch Video (project demo at 1:37)</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://github.com/riajain02/Eluo">GitHub Repo</a>
+                        </div>
+                        <img src="./images/recog.png" width=30/>
+                        <div style="position:relative; top:-29px; left:50px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">Engineering Design Academy Entrepreneurship Competition Top 10</div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br> 
+            <div id="invictus" style="border-style: outset; border-color: #a69cac;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/invictus.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:15px;">&nbsp;&nbsp;&nbsp;[software]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>invictus</b></div>
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:17px;">&nbsp;&nbsp; spring 2021</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Developed a web application to help change everyday eating habits to be more sustainable. Algorithm recognizes individual foods from images of meals,
+                            checks the detected ingredients across a database of foods, and provides feedback on the meal.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Clarifai Python API, HTML, CSS, PHP, Bootstrap, Heroku
+                        </div>
+                        <img src="./images/link.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">
+                            <a style="text-decoration: none;" href="https://www.youtube.com/watch?v=VpSzS39FcgU">Pitch Video (project demo at 1:46)</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://devpost.com/software/invictus-syvqw2">DevPost Page</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://github.com/riajain02/Invictus">GitHub Repo</a>
+                        </div>
+                        <img src="./images/recog.png" width=30/>
+                        <div style="position:relative; top:-29px; left:50px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">Superposition Hackathon: Best Duo Hack</div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br> 
+            <div id="scheme" style="border-style: outset; border-color: #a69cac;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/scheme.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:15px;">&nbsp;&nbsp;&nbsp;[software]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>scheme interpreter</b></div>
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:17px;">&nbsp;&nbsp; fall 2022</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Developed an interpreter for the programming language Scheme. Implemented in Python. Learned about basics of interpreters.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Python, Scheme
+                        </div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br> 
+            <div id="deque" style="border-style: outset; border-color: #a69cac;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/deque.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:15px;">&nbsp;&nbsp;&nbsp;[software]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>deques</b></div>
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:17px;">&nbsp;&nbsp; spring 2023</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                        Studied the backing linked list used in many data structures. Implemented three different data structures from scratch in Java: Linked List Deque, Array Deque, and Max Array Deque.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Java, Data Structures
+                        </div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br> 
+            <div id="timer" style="border-style: outset; border-color: #a69cac;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/timer.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #ECE290; font-size:15px;">&nbsp;&nbsp;&nbsp;[electronics]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>555 timer</b></div>
+                        <span style="font-family: 'Courier New'; color: #ECE290; font-size:17px;">&nbsp;&nbsp; spring 2022</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Used knowledge of capactiro charging and discharing, clock signals, control sequencing, and ICs to design a circuit that iterates from
+                            an output of 0000 to 1111, working as a sequential binary counter for 0 to 15 in decimal.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">555 Timer, Software Simulation (Multisim), Breadboarding, ICs, Resistors and Capacitors
+                        </div>
+                        <img src="./images/link.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">
+                            <a style="text-decoration: none;" href="https://docs.google.com/document/d/19SzY9NOZeLdWSrxffEkLHQADxCWVjnejmA6DnrXDX7A/edit">Documentation</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://drive.google.com/file/d/1iIxEb1KarlgOCR6llQ9ImQYVT-E6izno/view">Digital Protoype File</a>
+                        </div>
+                    </div>          
+                </p>
+            </div>
+        </div>
+
+
+
+
+        <div style="display: inline-block; width:35%;">
+            <div id="chatbot" style="border-style: outset; border-color: #a69cac; position:relative; left: 5%;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/chatbot.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #B1C6D9; font-size:15px;">&nbsp;&nbsp;&nbsp;[machine learning]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>sci-fi chatbot</b></div>
+                        <span style="font-family: 'Courier New'; color: #B1C6D9; font-size:17px;">&nbsp;&nbsp; spring 2021</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Programmed a chatbot that converses about science fiction literature. Program analyzes user's input using standard NLP techniques, like segmentation, tokenization, steming, lemmatization, part-of-speech tagging, etc., to classify the user's
+                            input into categories like greeting, goodbye, inquiry, recommendation request, and others. The chatbot responds accordingly.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Java, Apache OpenNLP, Natural Language Processing
+                        </div>
+                        <img src="./images/link.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">
+                            <a style="text-decoration: none;" href="https://www.youtube.com/watch?v=wCXjxfE0F2o&feature=youtu.be">Video Demo & Code Walkthrough (2.8k+ views)</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://github.com/riajain02/ChatBot">GitHub Repo</a>
+                        </div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br>
+            <div id="sra" style="border-style: outset; border-color: #a69cac; position:relative; left: 5%;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/sra.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #A8B690; font-size:15px;">&nbsp;&nbsp;&nbsp;[engineering]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>intelligent wrist rehabilitation glove</b></div>
+                        <span style="font-family: 'Courier New'; color: #A8B690; font-size:17px;">&nbsp;&nbsp; summer 2020</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Researched human-computer interaction and designed an assistive, soft-robotic wrist-rehabilitation glove for use in physical therapy. Parametrically programmed
+                            the soft robotic actuation process using Python scripting (to animate a CAD model of the device). Built an accompanying physical prototype using Arduino, integrated with CAD model.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Python scription, Fusion 360, Grasshopper, Rhino 3D, Simulia Abaqus, Arduino (with tilt sensors)
+                        </div>
+                        <img src="./images/link.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">
+                            <a style="text-decoration: none;" href="https://doi.org/10.47611/jsrhs.v10i1.1393">Manuscript (DOI number: 10.47611/jsrhs.v10i1.1393)</a>
+                        </div>
+                        <img src="./images/recog.png" width=30/>
+                        <div style="position:relative; top:-29px; left:50px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">Publication in Journal of Student Research</div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br>
+            <div id="mario" style="border-style: outset; border-color: #a69cac; position:relative; left: 5%;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/mario.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:15px;">&nbsp;&nbsp;&nbsp;[software]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>chemistry super mario</b></div>
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:17px;">&nbsp;&nbsp; spring 2021</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Programmed a simplified implementation of Super Mario Bros. to walk through the formation of potassium chloride through five chemical processes.
+                            Each level of the game teaches one step of the chemical process.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Greenfoot, Java
+                        </div>
+                        <img src="./images/link.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">
+                            <a style="text-decoration: none;" href="https://www.youtube.com/watch?v=NIeldpBeN8Q">Video Demonstration</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://github.com/riajain02/CSAGreenfootChemistryMarioGame">GitHub Repo</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://docs.google.com/document/d/10x3Dmbfe4zYocZPVM9QGfKxrVfgDbrSBcJkqpkGQFgs/edit">Documentation</a>
+                        </div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br>
+            <div id="bmei" style="border-style: outset; border-color: #a69cac; position:relative; left: 5%;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/bmei.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #ECE290; font-size:15px;">&nbsp;&nbsp;&nbsp;[engineering]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>carpal tunnel syndrome corrective device</b></div>
+                        <span style="font-family: 'Courier New'; color: #ECE290; font-size:17px;">&nbsp;&nbsp; summer 2020</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Designed and prototyped a preventative device for carpal tunnel syndrome to help establish correct typing posture.
+                            Used a tilt sensor with Arduino to determine the angle of the wrist, and then used an algorithm to determine if wrist posture is correct or not.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">C, Arduino (and accompanying biosensors), Statistical significance testing
+                        </div>
+                        <img src="./images/link.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">
+                            <a style="text-decoration: none;" href="https://drive.google.com/file/d/1KmuUTY7zDKooRdrW0yk9RTx9K7kltjzT/view?usp=sharing">Poster</a>
+                        </div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br>
+            <div id="rand-num" style="border-style: outset; border-color: #a69cac; position:relative; left: 5%;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/rand-num.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #ECE290; font-size:15px;">&nbsp;&nbsp;&nbsp;[electronics]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>random number generator</b></div>
+                        <span style="font-family: 'Courier New'; color: #ECE290; font-size:17px;">&nbsp;&nbsp; spring 2022</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Designed, modeled (via Multisim, a digital circuit prototyping software), and built a circuit that randomly produces face value of a single game die
+                            (number 1-6). Experimentally ensured that the capacitance and resistance matched a duty cycle and oscillation frequency that best suited the task of random number generation.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Breadboarding, ICs, Analog & Digital Combinational Logic, Digital Sequential Logic
+                        </div>
+                        <img src="./images/link.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">
+                            <a style="text-decoration: none;" href="https://drive.google.com/file/d/1gA0mw4P6NUtJxzZqpHm-riwnC23IuJYU/view">Digital Prototype File</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a style="text-decoration: none;" href="https://docs.google.com/document/d/1zIrSZYS3qvW1EwjDdLigROVVNsqLIWKdNYSvOxIsC2w/edit#">Documentation</a>
+                        </div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br>
+            <div id="titanic" style="border-style: outset; border-color: #a69cac; position:relative; left: 5%;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/titanic.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #B1C6D9; font-size:15px;">&nbsp;&nbsp;&nbsp;[machine learning]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>titanic survival prediction algorithm</b></div>
+                        <span style="font-family: 'Courier New'; color: #B1C6D9; font-size:17px;">&nbsp;&nbsp; fall 2020</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Implemented k-NN algorithm in Python to predict if an individual would survive the Titanic based on demographic factors. First performed data cleaning, then implemented the algorithm.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Python, Numpy, Pandas, Seaborn
+                        </div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+            <br>
+            <div id="world" style="border-style: outset; border-color: #a69cac; position:relative; left: 5%;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/world.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:15px;">&nbsp;&nbsp;&nbsp;[software]</span> 
+                        <div style="font-family: 'Courier New'; color: white; font-size:25px; position:relative; left:30px;"><b>randomly-generated world game</b></div>
+                        <span style="font-family: 'Courier New'; color: #F5D6D2; font-size:17px;">&nbsp;&nbsp; spring 2023</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Programmed an engine for generating explorable worlds, consisting of rooms and hallways that must be fully-connected. Generated a pac man-style avatar
+                            that can play a game of collecting coins in the world.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <div style="position:relative; left:50px; top:-29px; font-family: 'Helvetica'; color: #a69cac; font-size:17px; width:90%;">Java, Search Algorithms, Data Structures
+                        </div>
+                    </div>          
+                </p>
+            </div>
+            <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>  
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br> 
+        <br> 
+        </div>      
+    </div>
+    <br>
+    <br>
+    <br> 
+</body>
+
+</html>
+
+<!--
+
+            <div id="gwl" style="border-style: outset; border-color: #a69cac;">
+                <p>
+                    <div style="display: inline-block;">
+                        <img src="./images/gwl.png" width=100px style="position:relative; left:15px"/>
+                    </div>
+                    <div style="display: inline-block; position:relative; top:-10px;">
+                        <span style="font-family: 'Courier New'; color: #B1C6D9; font-size:15px;">&nbsp;&nbsp;&nbsp;[machine learning]</span> 
+                        <br>
+                        <span style="font-family: 'Courier New'; color: white; font-size:25px;"><b>&nbsp; groundwater level forecasting</b></span>
+                        <br>
+                        <span style="font-family: 'Courier New'; color: #B1C6D9; font-size:17px;">&nbsp;&nbsp; summer 2021</span>
+                        <br>
+                    </div>
+                    <br>
+                    <br>
+                    <div style="position:relative; left: 3%; width: 94%;">
+                        <span style="font-family: 'Helvetica'; color: #f1dac4; font-size:17px;">
+                            Implemented and compared performance of various neural network models (FNN, RNN, LSTM, CNN).
+                            Tested a novel technique that improved model performance for one-month ahead groundwater level predictions by over 10%.
+                        </span>
+                        <br>
+                        <br>
+                        <img src="./images/tech.png" width=30/>
+                        <span style="position:relative; top:-4px; font-family: 'Helvetica'; color: #a69cac; font-size:17px;">&nbsp;&nbsp;&nbsp;Python, TensorFlow, Keras, Matplotlib</span>
+                        <br>
+                    </div>          
+                </p>
+            </div>
+
+
+-->
