@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+  <h1>Project 1</h1>
+  <h2>Images of the Russian Empire: Colorizing the Prokudin-Gorskii Photo Collection</h2>
+  <h3>Project Overview</h3>
+  <p>
+    In the early twentieth century, Sergei Mikhailovich Prokudin-Gorskii captured numerous color photographs of regions all over the Russian Empire. He accomplished this by capturing each scene three times, each time through a red, green, or blue filter. The intention was to use these colored filters to physically project the three images together, producing a single colored image of the scene. The goal of this project is to use the digitized single-filter images to produce a digital colored image.
+  </p>
+  <h3>Basic Approach</h3>
+  <p>
+    Aligning the image can be done using a simple x, y translation. Each scene is captured in three glass plates, so the first step is to separate them into three slides: blue, green, and red. Then, the red and green slides are aligned with the blue slide to form a single image.
+  </p>
+  <p>
+    In order to determine the displacement vector (x, y), I performed an iterative search over all pairs of pixels in the range -15 ≤ x, y ≤ 15, choosing the vector with the lowest total image difference. While I originally used Euclidean distance, I switched to Normalized Cross Correlation because it had better results for some of the images. When testing this implementation, I also realized that there was still some imperfect alignment due to the image borders impacting the metrics. To alleviate this, I only considered the middle 90% of pixels (essentially ignoring the borders), as that would be a clearer signal of alignment. This helped achieve near-perfect alignment for the smaller image files.
+  </p>
+  <h3>Pyramid Approach</h3>
+  <p>
+    For larger images, the iterative search becomes too expensive since the range of pixels over which the search must be performed is too large. So, for such images, I modified the algorithm to search using an image pyramid. At each level of the pyramid, I refined the coarser alignment vector over a smaller search range (±5 pixels). This helped achieve near-perfect results for larger image files.
+  </p>
+  <p>
+    This algorithm worked on all images except for the Emir of Bukhara, which likely failed due to the vast difference in brightness values between the three color slides. To address this, instead of using NCC or Euclidean distance alone, I added an edge detection pre-processing step. This is because regardless of brightness, edges should remain the same between the slides. To detect edges, I convolved the image with the standard horizontal edge detection kernel ([[-1, -1, -1], [0, 0, 0], [1, 1, 1]]). This helped improve the results as shown below:
+  </p>
+  <p>
+    Before:
+    <br>
+    <img src="color_images/color_emir_old.jpg" width="200">
+    <br>
+    After:
+    <br>
+    <img src="color_images/color_emir_new.jpg" width="200">
+  </p>
+  <h3>Results</h3>
+  <h4>Example Images</h4>
+  <img src="color_images/color_cathedral.jpg" width="300">
+  <p>
+    Green offset: (2, 5)
+    <br>
+    Red offset: (3, 12)
+    <br>
+    Time: 0.45 sec
+  </p>
+  <img src="color_images/color_church.jpg" width="300">
+  <p>
+    Green offset: (4, 25)
+    <br>
+    Red offset: (-4, 58)
+    <br>
+    Time: 5.26 sec
+  </p>
+  <img src="color_images/color_emir_new.jpg" width="300">
+  <p>
+    Green offset: (24, 49)
+    <br>
+    Red offset: (56, 104)
+    <br>
+    Time: 5.47 sec
+  </p>
+  <img src="color_images/color_harvesters.jpg" width="300">
+  <p>
+    Green offset: (17, 60)
+    <br>
+    Red offset: (13, 124)
+    <br>
+    Time: 5.31 sec
+  </p>
+  <img src="color_images/color_icon.jpg" width="300">
+  <p>
+    Green offset: (17, 41)
+    <br>
+    Red offset: (23, 89)
+    <br>
+    Time: 5.40 sec
+  </p>
+  <img src="color_images/color_italil.jpg" width="300">
+  <p>
+    Green offset: (21, 38)
+    <br>
+    Red offset: (35, 76)
+    <br>
+    Time: 5.31 sec
+  </p>
+  <img src="color_images/color_lastochikino.jpg" width="300">
+  <p>
+    Green offset: (-2, -3)
+    <br>
+    Red offset: (-9, 75)
+    <br>
+    Time: 5.41 sec
+  </p>
+  <img src="color_images/color_lugano.jpg" width="300">
+  <p>
+    Green offset: (-16, 41)
+    <br>
+    Red offset: (-29, 93)
+    <br>
+    Time: 5.49 sec
+  </p>
+  <img src="color_images/color_melons.jpg" width="300">
+  <p>
+    Green offset: (11, 82)
+    <br>
+    Red offset: (13, 178)
+    <br>
+    Time: 5.52 sec
+  </p>
+  <img src="color_images/color_monastery.jpg" width="300">
+  <p>
+    Green offset: (2, -3)
+    <br>
+    Red offset: (2, 3)
+    <br>
+    Time: 0.44 sec
+  </p>
+  <img src="color_images/color_self_portrait.jpg" width="300">
+  <p>
+    Green offset: (29, 79)
+    <br>
+    Red offset: (37, 176)
+    <br>
+    Time: 5.56 sec
+  </p>
+  <img src="color_images/color_siren.jpg" width="300">
+  <p>
+    Green offset: (-6, 49)
+    <br>
+    Red offset: (-25, 96)
+    <br>
+    Time: 5.77 sec
+  </p>
+  <img src="color_images/color_three_generations.jpg" width="300">
+  <p>
+    Green offset: (14, 53)
+    <br>
+    Red offset: (11, 112)
+    <br>
+    Time: 5.30 sec
+  </p>
+  <img src="color_images/color_tobolsk.jpg" width="300">
+  <p>
+    Green offset: (3, 3)
+    <br>
+    Red offset: (3, 6)
+    <br>
+    Time: 0.46 sec
+  </p>
+  
+  <h4>Other Images</h4>
+  <img src="color_images/color_castle.jpg" width="300">
+  <p>
+    Green offset: (3, 35)
+    <br>
+    Red offset: (4, 98)
+    <br>
+    Time: 5.72 sec
+  </p>
+  <img src="color_images/color_flower.jpg" width="300">
+  <p>
+    Green offset: (3, 51)
+    <br>
+    Red offset: (-6, 104)
+    <br>
+    Time: 5.43 sec
+  </p>
+  <img src="color_images/color_mosque.jpg" width="300">
+  <p>
+    Green offset: (10, 26)
+    <br>
+    Red offset: (11, 70)
+    <br>
+    Time: 5.48 sec
+  </p>
+
+  <br>
+  <br>
+  <a href="../index.html">Back to home</a>
+</body>
+</html>
+
