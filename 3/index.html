@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+  <h1>Project 3</h1>
+  <h2>Auto-Stitching Photo Mosaics</h2>
+
+  <a href="#a1">Part A.1</a> <br>
+  <a href="#a2">Part A.2</a> <br>
+  <a href="#a3">Part A.3</a> <br>
+  <a href="#a4">Part A.4</a> <br>
+  <a href="#b1">Part B.1</a> <br>
+  <a href="#b2">Part B.2</a> <br>
+  <a href="#b3">Part B.3</a> <br>
+  <a href="#b4">Part B.4</a> <br>
+  <br>
+  <br>
+
+  <h3>Part A: Image Warping and Mosaicing</h3>
+  <h4 id="a1">Part A.1: Shoot the Pictures</h4>
+  <p>Here are three pairs of photographs with projective transforms between them. Each pair has a left-facing and right-facing photo.</p>
+  <p>Example 1: Trees</p>
+  <img src="./images/left_forest.jpg" height="350">
+  <img src="./images/right_forest.jpg" height="350">
+  <p>Example 2: Building</p>
+  <img src="./images/left_grimes.jpg" height="350">
+  <img src="./images/right_grimes.jpg" height="350">
+  <p>Example 3: Library</p>
+  <img src="./images/left_lib.jpg" height="350">
+  <img src="./images/right_lib.jpg" height="350">
+
+  <h4 id="a2">Part A.2: Recover Homographies</h4>
+  <p>Because each pair is the result of a projective transform, image alignment can be performed by finding the transformation matrix (homography) between the pair of images:</p>
+  <pre> 
+    <code>
+    H = [[a, b, c],     // H = 3 x 3 homography matrix with 8 DOF
+         [d, e, f],
+         [g, h, 1]]
+    
+    p' = Hp             // projective transformation (p' = transformed image, p = original image)   
+    </code>
+  </pre>
+  <p>For each image pair, the left image is the "original" image and the right image is the "transformed" image. Point correspondences are manually selected to help with alignment. These are stored in <code>im1_pts</code> and <code>im2_pts</code>, both of which have <code>n</code> points. For a single set of points, the following equation holds:</p>
+  <pre> 
+    <code>
+    a = im1_pts[i]                           // point in original image, (x, y)
+    b = im2_pts[i]                           // point in transformed image, (x', y')
+    
+    a_arr = [    a[0],     a[1], 1].T
+    b_arr = [w * b[0], w * b[1], w].T
+    b_arr = H @ a_arr                        // this is the constraining equation
+    </code>
+  </pre>
+  <p>Expanding this equation (which, for now, is still for a single pair of points):</p>
+  <pre> 
+    <code>
+    w * b[0] = a * a[0] + b * a[1] + c
+    w * b[1] = d * a[0] + e * a[1] + f
+    w = g * a[0] + h * a[1] + 1
+    </code>
+  </pre>
+  <p>Substituting in <code>w</code>:</p>
+  <pre> 
+    <code>
+    w * b[0] = a * a[0] + b * a[1] + c
+    (g * a[0] + h * a[1] + 1) * b[0] = a * a[0] + b * a[1] + c
+    g * a[0] * b[0] + h * a[1] * b[0] + b[0] = a * a[0] + b * a[1] + c
+    0 = a * a[0] + b * a[1] - g * a[0] * b[0] - h * a[1] * b[0] - b[0] + c
+
+    w * b[1] = d * a[0] + e * a[1] + f
+    (g * a[0] + h * a[1] + 1) * b[1] = d * a[0] + e * a[1] + f
+    g * a[0] * b[1] + h * a[1] * b[1] + b[1] = d * a[0] + e * a[1] + f
+    0 = d * a[0] + e * a[1] - g * a[0] * b[1] - h * a[1] * b[1] - b[1] + f
+    </code>
+  </pre>
+  <p>Each pair of point correspondences gives two equations:</p>
+  <pre> 
+    <code>
+    b[0] = <strong>a</strong> * a[0] + <strong>b</strong> * a[1] + <strong>c</strong> -                           <strong>g</strong> * a[0] * b[0] - <strong>h</strong> * a[1] * b[0]
+    b[1] =                           <strong>d</strong> * a[0] + <strong>e</strong> * a[1] + <strong>f</strong> - <strong>g</strong> * a[0] * b[1] - <strong>h</strong> * a[1] * b[1]
+    </code>
+  </pre>
+  <p>These can be re-written into matrix-vector form:</p>
+  <img src="./images/3a_2_deriv1.png" height="200">
+  <p>Equivalently:</p>
+  <img src="./images/3a_2_deriv2.png" height="200">
+  <p>Then, we can set up a system of equations. Since we often use many point correspondences, this system will often be overconstrained, so least squares is used to solve.</p>
+  
+  <p>The first set of images is the trees. First, 10 point correspondences are manually selected and plotted below. Each point belonging to a single correspondence is plotted in the same color on each image:</p>
+  <img src="./images/forest_pt_corr.png" height="500">
+  <pre>
+    <code> 
+    // Left image points:
+    im1_pts = [[420.70133597, 354.66607352],
+               [306.34106797, 357.87650931],
+               [482.19439935, 111.71103896],
+               [441.62996182,  44.11023957],
+               [415.95399025, 311.62681247],
+               [412.89594257, 312.91324514],
+               [479.58787245, 393.28741893],
+               [466.46978483, 398.39509752],
+               [421.7057412 , 409.18698218],
+               [300.38921396, 401.09231245]]
+    
+    // Right image points:
+    im2_pts = [[213.66666667, 353.38744589],
+               [ 92.46515389, 363.76456084],
+               [290.69248212, 134.36856001],
+               [264.15584416,  65.27489177],
+               [215.45744434, 311.39663398],
+               [212.99985729, 311.16636538],
+               [261.36982822, 385.69617058],
+               [249.45380017, 391.25135975],
+               [209.25859854, 405.8431172 ],
+               [ 79.97608509, 411.2687955 ]]
+    </code>
+  </pre>
+  <p>This gives the following system of equations:</p>
+  <pre>
+    <code>
+    A = [ 4.21e+02  3.55e+02  1.00e+00  0.00e+00  0.00e+00  0.00e+00 -8.99e+04
+         -7.58e+04  0.00e+00  0.00e+00  0.00e+00  4.21e+02  3.55e+02  1.00e+00
+         -1.49e+05 -1.25e+05  3.06e+02  3.58e+02  1.00e+00  0.00e+00  0.00e+00
+          0.00e+00 -2.83e+04 -3.31e+04  0.00e+00  0.00e+00  0.00e+00  3.06e+02
+          3.58e+02  1.00e+00 -1.11e+05 -1.30e+05  4.82e+02  1.12e+02  1.00e+00
+          0.00e+00  0.00e+00  0.00e+00 -1.40e+05 -3.25e+04  0.00e+00  0.00e+00
+          0.00e+00  4.82e+02  1.12e+02  1.00e+00 -6.48e+04 -1.50e+04  4.42e+02
+          4.41e+01  1.00e+00  0.00e+00  0.00e+00  0.00e+00 -1.17e+05 -1.17e+04
+          0.00e+00  0.00e+00  0.00e+00  4.42e+02  4.41e+01  1.00e+00 -2.88e+04
+         -2.88e+03  4.16e+02  3.12e+02  1.00e+00  0.00e+00  0.00e+00  0.00e+00
+         -8.96e+04 -6.71e+04  0.00e+00  0.00e+00  0.00e+00  4.16e+02  3.12e+02
+          1.00e+00 -1.30e+05 -9.70e+04  4.13e+02  3.13e+02  1.00e+00  0.00e+00
+          0.00e+00  0.00e+00 -8.79e+04 -6.67e+04  0.00e+00  0.00e+00  0.00e+00
+          4.13e+02  3.13e+02  1.00e+00 -1.28e+05 -9.74e+04  4.80e+02  3.93e+02
+          1.00e+00  0.00e+00  0.00e+00  0.00e+00 -1.25e+05 -1.03e+05  0.00e+00
+          0.00e+00  0.00e+00  4.80e+02  3.93e+02  1.00e+00 -1.85e+05 -1.52e+05
+          4.66e+02  3.98e+02  1.00e+00  0.00e+00  0.00e+00  0.00e+00 -1.16e+05
+         -9.94e+04  0.00e+00  0.00e+00  0.00e+00  4.66e+02  3.98e+02  1.00e+00
+         -1.83e+05 -1.56e+05  4.22e+02  4.09e+02  1.00e+00  0.00e+00  0.00e+00
+          0.00e+00 -8.82e+04 -8.56e+04  0.00e+00  0.00e+00  0.00e+00  4.22e+02
+          4.09e+02  1.00e+00 -1.71e+05 -1.66e+05  3.00e+02  4.01e+02  1.00e+00
+          0.00e+00  0.00e+00  0.00e+00 -2.40e+04 -3.21e+04  0.00e+00  0.00e+00
+          0.00e+00  3.00e+02  4.01e+02  1.00e+00 -1.24e+05 -1.65e+05]
+    
+    b = [ 2.14e+02  3.53e+02  9.25e+01  3.64e+02  2.91e+02  1.34e+02  2.64e+02
+          6.53e+01  2.15e+02  3.11e+02  2.13e+02  3.11e+02  2.61e+02  3.86e+02
+          2.49e+02  3.91e+02  2.09e+02  4.06e+02  8.00e+01  4.11e+02]
+    
+    H = least_squares(A, b)
+    </code>
+  </pre>
+  <p>The recovered homography matrix for the trees is:</p>
+  <pre>
+    <code>
+    H = [[ 2.06e+00 -2.31e-01 -4.04e+02 ],
+         [ 6.15e-01  1.66e+00 -2.22e+02 ],
+         [ 1.98e-03 -1.76e-04  1.00e+00 ]]
+    </code>
+  </pre>
+
+  <p>Following the same process for the next set of images, the building:</p>
+  <img src="./images/grimes_pt_corr.png" height="500">
+  <pre>
+    <code> 
+    // Left image points:
+    im1_pts = [[278.14526743,  14.58041165],
+               [243.77489177, 182.92857143],
+               [277.12554113, 217.66883117],
+               [510.11688312, 284.83333333],
+               [347.53246753, 184.78138528],
+               [276.66233766, 169.03246753],
+               [301.67532468,  89.82467532],
+               [367.91341991, 135.68181818],
+               [412.38095238, 166.71645022],
+               [443.41558442, 188.48701299]]
+    
+    // Right image points:
+    im2_pts = [[151.52961672,   5.66851441],
+               [ 90.45454545, 176.44372294],
+               [126.58441558, 219.05844156],
+               [339.19480519, 298.26623377],
+               [208.57142857, 194.04545455],
+               [133.06926407, 164.86363636],
+               [169.66233766,  88.8982684 ],
+               [232.19480519, 147.26190476],
+               [270.17748918, 184.31818182],
+               [296.11688312, 209.33116883]]
+    </code>
+  </pre>
+  <p>This gives the following system of equations:</p>
+  <pre>
+    <code>
+    A = [ 2.78e+02  1.46e+01  1.00e+00  0.00e+00  0.00e+00  0.00e+00 -4.21e+04
+         -2.21e+03  0.00e+00  0.00e+00  0.00e+00  2.78e+02  1.46e+01  1.00e+00
+         -1.58e+03 -8.26e+01  2.44e+02  1.83e+02  1.00e+00  0.00e+00  0.00e+00
+          0.00e+00 -2.21e+04 -1.65e+04  0.00e+00  0.00e+00  0.00e+00  2.44e+02
+          1.83e+02  1.00e+00 -4.30e+04 -3.23e+04  2.77e+02  2.18e+02  1.00e+00
+          0.00e+00  0.00e+00  0.00e+00 -3.51e+04 -2.76e+04  0.00e+00  0.00e+00
+          0.00e+00  2.77e+02  2.18e+02  1.00e+00 -6.07e+04 -4.77e+04  5.10e+02
+          2.85e+02  1.00e+00  0.00e+00  0.00e+00  0.00e+00 -1.73e+05 -9.66e+04
+          0.00e+00  0.00e+00  0.00e+00  5.10e+02  2.85e+02  1.00e+00 -1.52e+05
+         -8.50e+04  3.48e+02  1.85e+02  1.00e+00  0.00e+00  0.00e+00  0.00e+00
+         -7.25e+04 -3.85e+04  0.00e+00  0.00e+00  0.00e+00  3.48e+02  1.85e+02
+          1.00e+00 -6.74e+04 -3.59e+04  2.77e+02  1.69e+02  1.00e+00  0.00e+00
+          0.00e+00  0.00e+00 -3.68e+04 -2.25e+04  0.00e+00  0.00e+00  0.00e+00
+          2.77e+02  1.69e+02  1.00e+00 -4.56e+04 -2.79e+04  3.02e+02  8.98e+01
+          1.00e+00  0.00e+00  0.00e+00  0.00e+00 -5.12e+04 -1.52e+04  0.00e+00
+          0.00e+00  0.00e+00  3.02e+02  8.98e+01  1.00e+00 -2.68e+04 -7.99e+03
+          3.68e+02  1.36e+02  1.00e+00  0.00e+00  0.00e+00  0.00e+00 -8.54e+04
+         -3.15e+04  0.00e+00  0.00e+00  0.00e+00  3.68e+02  1.36e+02  1.00e+00
+         -5.42e+04 -2.00e+04  4.12e+02  1.67e+02  1.00e+00  0.00e+00  0.00e+00
+          0.00e+00 -1.11e+05 -4.50e+04  0.00e+00  0.00e+00  0.00e+00  4.12e+02
+          1.67e+02  1.00e+00 -7.60e+04 -3.07e+04  4.43e+02  1.88e+02  1.00e+00
+          0.00e+00  0.00e+00  0.00e+00 -1.31e+05 -5.58e+04  0.00e+00  0.00e+00
+          0.00e+00  4.43e+02  1.88e+02  1.00e+00 -9.28e+04 -3.95e+04]
+    
+    b = [ 1.52e+02  5.67e+00  9.05e+01  1.76e+02  1.27e+02  2.19e+02  3.39e+02
+          2.98e+02  2.09e+02  1.94e+02  1.33e+02  1.65e+02  1.70e+02  8.89e+01
+          2.32e+02  1.47e+02  2.70e+02  1.84e+02  2.96e+02  2.09e+02]
+    
+    H = least_squares(A, b)
+    </code>
+  </pre>
+  <p>The recovered homography matrix for the building is:</p>
+  <pre>
+    <code>
+    H = [[ 1.89e+00 -2.03e-01 -3.01e+02 ],
+         [ 5.31e-01  1.49e+00 -1.62e+02 ],
+         [1.68e-03  -2.47e-04  1.00e+00 ]]
+    </code>
+  </pre>
+
+  <p>Finally, for the library:</p>
+  <img src="./images/lib_pt_corr.png" height="500">
+  <pre>
+    <code> 
+    // Left image points:
+    im1_pts = [[313.40100789, 200.28420606],
+               [314.64502165, 328.37445887],
+               [362.81818182, 199.6038961 ],
+               [366.98701299, 330.69047619],
+               [320.2034632 , 239.43939394],
+               [349.84848485, 238.51298701],
+               [263.22943723, 254.72510823],
+               [505.02164502, 181.53896104],
+               [512.8961039 , 256.11471861],
+               [335.48917749, 286.68614719]]
+    
+    // Right image points:
+    im2_pts = [[129.82683983, 194.50865801],
+               [132.14285714, 332.54329004],
+               [185.87445887, 194.50865801],
+               [187.26406926, 326.05844156],
+               [140.48051948, 236.66017316],
+               [173.83116883, 234.34415584],
+               [ 49.69264069, 258.43073593],
+               [295.19047619, 182.92857143],
+               [299.35930736, 249.62987013],
+               [158.08225108, 285.2965368 ]]
+    </code>
+  </pre>
+  <p>This gives the following system of equations:</p>
+  <pre>
+    <code>
+    A = [ 3.13e+02  2.00e+02  1.00e+00  0.00e+00  0.00e+00  0.00e+00 -4.07e+04
+         -2.60e+04  0.00e+00  0.00e+00  0.00e+00  3.13e+02  2.00e+02  1.00e+00
+         -6.10e+04 -3.90e+04  3.15e+02  3.28e+02  1.00e+00  0.00e+00  0.00e+00
+          0.00e+00 -4.16e+04 -4.34e+04  0.00e+00  0.00e+00  0.00e+00  3.15e+02
+          3.28e+02  1.00e+00 -1.05e+05 -1.09e+05  3.63e+02  2.00e+02  1.00e+00
+          0.00e+00  0.00e+00  0.00e+00 -6.74e+04 -3.71e+04  0.00e+00  0.00e+00
+          0.00e+00  3.63e+02  2.00e+02  1.00e+00 -7.06e+04 -3.88e+04  3.67e+02
+          3.31e+02  1.00e+00  0.00e+00  0.00e+00  0.00e+00 -6.87e+04 -6.19e+04
+          0.00e+00  0.00e+00  0.00e+00  3.67e+02  3.31e+02  1.00e+00 -1.20e+05
+         -1.08e+05  3.20e+02  2.39e+02  1.00e+00  0.00e+00  0.00e+00  0.00e+00
+         -4.50e+04 -3.36e+04  0.00e+00  0.00e+00  0.00e+00  3.20e+02  2.39e+02
+          1.00e+00 -7.58e+04 -5.67e+04  3.50e+02  2.39e+02  1.00e+00  0.00e+00
+          0.00e+00  0.00e+00 -6.08e+04 -4.15e+04  0.00e+00  0.00e+00  0.00e+00
+          3.50e+02  2.39e+02  1.00e+00 -8.20e+04 -5.59e+04  2.63e+02  2.55e+02
+          1.00e+00  0.00e+00  0.00e+00  0.00e+00 -1.31e+04 -1.27e+04  0.00e+00
+          0.00e+00  0.00e+00  2.63e+02  2.55e+02  1.00e+00 -6.80e+04 -6.58e+04
+          5.05e+02  1.82e+02  1.00e+00  0.00e+00  0.00e+00  0.00e+00 -1.49e+05
+         -5.36e+04  0.00e+00  0.00e+00  0.00e+00  5.05e+02  1.82e+02  1.00e+00
+         -9.24e+04 -3.32e+04  5.13e+02  2.56e+02  1.00e+00  0.00e+00  0.00e+00
+          0.00e+00 -1.54e+05 -7.67e+04  0.00e+00  0.00e+00  0.00e+00  5.13e+02
+          2.56e+02  1.00e+00 -1.28e+05 -6.39e+04  3.35e+02  2.87e+02  1.00e+00
+          0.00e+00  0.00e+00  0.00e+00 -5.30e+04 -4.53e+04  0.00e+00  0.00e+00
+          0.00e+00  3.35e+02  2.87e+02  1.00e+00 -9.57e+04 -8.18e+04]
+    
+    b = [ 1.30e+02  1.95e+02  1.32e+02  3.33e+02  1.86e+02  1.95e+02  1.87e+02
+          3.26e+02  1.40e+02  2.37e+02  1.74e+02  2.34e+02  4.97e+01  2.58e+02
+          2.95e+02  1.83e+02  2.99e+02  2.50e+02  1.58e+02  2.85e+02]
+    
+    H = least_squares(A, b)
+    </code>
+  </pre>
+  <p>The recovered homography matrix for the library is:</p>
+  <pre>
+    <code>
+    H = [[  3.65e-01 -3.59e-01  2.99e+01 ],
+         [ -5.88e-02 -1.43e-01  1.55e+02 ],
+         [ -1.82e-04 -2.08e-03  1.00e+00 ]]
+    </code>
+  </pre>
+
+
+  <h4 id="a3">Part A.3: Warp the Images</h4>
+  <p>Now that each pair has a homography matrix, the images can be warped. This is done using inverse warping: for every pixel in the destination image (x', y'), first the corresponding source coordinates (x, y) are calculated, and then the source value f(x, y) is copied into g(x', y'). The case that (x, y) is non-integer, interpolation is used. The convention for interpolating pixel locations used here is setting (0, 0) to be the center of the top-left pixel. In order to ensure that the entire source image is warped, the bounding box of the transformed image is predicted ahead of time. For areas of the image that do not have valid values, the image remains black.</p>
+  <p>The first type of interpolation is nearest neighbor interpolation, where (x, y) is rounded to the nearest in-range pixel value. This produced the following result for the trees and building:</p>
+  <img src="./images/left_forest_warped_nn.jpg" height="500">
+  <img src="./images/left_grimes_warped_nn.jpg" height="500">
+  <p>The second type of interpolation is bilinear interpolation, which takes the weighted average of the four surrounding pixel values based on the distance to each pixel. This produced the following images:</p>
+  <img src="./images/left_forest_warped_bil.jpg" height="500">
+  <img src="./images/left_grimes_warped_bil.jpg" height="500">
+  <p>The tradeoff between the two interpolation methods is speed vs. quality. As can be seen above, the nearest neighbor interpolation results in a lower-quality output that suffers from aliasing, whereas the bilinear interpolation images are more smoothed and nice. A good example of this tradeoff is the roof of the building, which is grainy and aliased in the nearest neighbor image but smoothed in the bilinear image. However, the nearest neighbor implementation is almost 3x faster than the bilinear implementation, which take around ~2.5 sec and ~7 sec (respectively) to complete on average.</p>
+  <p>The correctness of this implementation can be verified with image rectification, in which a distorted square or rectangular object is mapped back to a straight box. For this, the following distorted images of square objects were taken:</p>
+  <img src="./images/post_it.jpg" height="400">
+  <img src="./images/chocolate.jpg" height="400">
+  <p>Then, to compute the homography matrix, the four corners of each image were selected:</p>
+  <img src="./images/post_it_pt_corr.png" height="400">
+  <img src="./images/chocolate_pt_corr.png" height="400">
+  <p>These were matched to the following hard-coded points:</p>
+  <pre>
+    <code>
+    // a is a constant (square width)
+    corner_pts = [[ 0 , 0 ],     // top left
+                  [ a , 0 ]      // top right
+                  [ 0 , a ]      // bottom left
+                  [ a , a ]]     // bottom right
+    </code>
+  </pre>
+  <p>This resulted in the following rectified images using the nearest neighbor implementation:</p>
+  <img src="./images/post_it_warped_nn.jpg" height="400">
+  <img src="./images/chocolate_warped_nn.jpg" height="400">
+  <p>Results using bilinear implementation:</p>
+  <img src="./images/post_it_warped_bil.jpg" height="400">
+  <img src="./images/chocolate_warped_bil.jpg" height="400">
+  <p>These rectified images have the desired straight horizontal and vertical edges.</p>
+
+
+  <h4 id="a4">Part A.4: Blend the Images into a Mosaic</h4>
+  <p>Finally, to blend the images into a mosaic, I used a set of 3 images (left, center, and right perspectives of the scene). The original images are showing below:</p>
+  <img src="./images/pan1_left.jpg" height="300">
+  <img src="./images/pan1_center.jpg" height="300">
+  <img src="./images/pan1_right.jpg" height="300">
+  <p>The first step is to warp the left and right images to match the center perspective. This is done by establishing the following point correspondences between the left and center images (above) and right and center images (below):</p>
+  <img src="./images/pan1_left_pt_corr.png" height="500">
+  <br>
+  <img src="./images/pan1_right_pt_corr.png" height="500">
+  <p>Then, the homography matrices are computed and the left & right images are warped to match the center. In order to ensure that images can still be stitched together, the bounds of the warped images are adjusted so that all images lie within a common coordinate frame. This is done by computing the bounds of each warped image, then offsetting the warping operation based on the mosaic bounds (which account for the bounds of both individual warps). This ensures that the images are aligned correctly on a shared canvas, as shown below:</p>
+  <img src="./images/pan1_left_warped.jpg" height="300">
+  <br>
+  <img src="./images/pan1_center_warped.jpg" height="300">
+  <br>
+  <img src="./images/pan1_right_warped.jpg" height="300">
+  <p>When stitched naively, meaning the center image overwrites the warped images, this gives the following result:</p>
+  <img src="./images/pan1_naive_stitch.jpg" height="300">
+  <p>However, this leads to harsh edges, so the images need to be blended together instead. This done by using the following masks, which are based on distance from the center image:</p>
+  <img src="./images/pan1_left_mask.jpg" height="300">
+  <br>
+  <img src="./images/pan1_center_mask.jpg" height="300">
+  <br>
+  <img src="./images/pan1_right_mask.jpg" height="300">
+  <p>Using these to take a weighted average of the three images produces the following result, which has smoothed edges:</p>
+  <img src="./images/pan1_mosaic.jpg" height="300">
+  <p>This same method is used to warp and blend these original images:</p>
+  <img src="./images/pan2_left.jpg" height="300">
+  <img src="./images/pan2_center.jpg" height="300">
+  <img src="./images/pan2_right.png" height="300">
+  <p>Producing the following result:</p>
+  <img src="./images/pan2_mosaic.jpg" height="300">
+  <p>Here is another example:</p>
+  <img src="./images/pan3_left.jpg" height="300">
+  <img src="./images/pan3_center.jpg" height="300">
+  <img src="./images/pan3_right.jpg" height="300">
+  <p>Producing the following result:</p>
+  <img src="./images/pan3_mosaic.jpg" height="300">
+
+  <br>
+  <br>
+  <br>
+
+  <h3 id="ptB">Part B: Feature Matching for Auto-Stitching</h3>
+  <h4 id="b1">Part B.1: Harris Corner Detection</h4>
+  <p>TBD</p>
+
+  <h4 id="b2">Part B.2: Feature Descriptor Extraction</h4>
+  <p>TBD</p>
+
+  <h4 id="b3">Part B.3: Feature Matching</h4>
+  <p>TBD</p>
+
+  <h4 id="b4">Part B.4: RANSAC for Robust Homography</h4>
+  <p>TBD</p>
+
+  
+
+  <br>
+  <br>
+  <a href="../index.html">Back to home</a>
+</body>
+</html>
