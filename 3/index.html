@@ -390,16 +390,71 @@
 
   <h3 id="ptB">Part B: Feature Matching for Auto-Stitching</h3>
   <h4 id="b1">Part B.1: Harris Corner Detection</h4>
-  <p>TBD</p>
+  <p>The first step for automating the stitching process is to detect interest points for alignment. For this, the Harris Interest Point Detector algorithm is used, which finds corners in the image by finding points where pixel intensity significantly changes in both the x and y directions.</p>
+  <p>After the initial set of interest points is determined, a smaller set of interest points needs to be determined because performing alignment using all of these points is highly computationally expensive. To downselect, the chosen points should both be strong and well-distributed throughout the image. The adaptive non-maximal suppression (ANMS) algorithm is used to do so, where a suppression radius is calculated for each interest point, representing the minimum distance from that interest point to a significantly stronger interest point. Then, the top 500 points with the highest suppression radii are kept.</p>
+  <p>The results of both of these sets for each pair of images is shown below.</p>
+  <p>PAIR 1: ROOM</p>
+  <p>Original images:</p>
+  <img src="./images/pan1_left.jpg" height="300">
+  <img src="./images/pan1_center.jpg" height="300">
+  <p>Harris corners:</p>
+  <img src="./images_b/room_left_harris.jpg" height="400">
+  <img src="./images_b/room_right_harris.jpg" height="400">
+  <p>ANMS points:</p>
+  <img src="./images_b/room_left_anms.jpg" height="400">
+  <img src="./images_b/room_right_anms.jpg" height="400">
+  <p>Harris corners (red) and ANMS points (green):</p>
+  <img src="./images_b/room_left_harris_anms.jpg" height="400">
+  <img src="./images_b/room_right_harris_anms.jpg" height="400">
+  
+  <p>PAIR 2: DOOR</p>
+  <p>Original images:</p>
+  <img src="./images/pan2_left.jpg" height="300">
+  <img src="./images/pan2_center.jpg" height="300">
+  <p>Harris corners:</p>
+  <img src="./images_b/door_left_harris.jpg" height="400">
+  <img src="./images_b/door_right_harris.jpg" height="400">
+  <p>ANMS points:</p>
+  <img src="./images_b/door_left_anms.jpg" height="400">
+  <img src="./images_b/door_right_anms.jpg" height="400">
+  <p>Harris corners (red) and ANMS points (green):</p>
+  <img src="./images_b/door_left_harris_anms.jpg" height="400">
+  <img src="./images_b/door_right_harris_anms.jpg" height="400">
 
   <h4 id="b2">Part B.2: Feature Descriptor Extraction</h4>
-  <p>TBD</p>
+  <p>Now that each image has a set of interest points, there needs to be a feature descriptor for that point (which will be used to find matches across images). This is done by first using Gaussian blurring to get a lower frequency image, since higher frequencies often correspond to noise. Then, a 40x40 patch is extracted around the pixel. Then, the patch is resized to be 8x8. Finally, the patch is normalized so that the features are invariant to brightness.</p>
+  <p>The following are some feature descriptors from the left image of the room:</p>
+  <img src="./images_b/room_left_feature_descriptors.jpg", height="400">
+  <p>Right image of the room:</p>
+  <img src="./images_b/room_right_feature_descriptors.jpg", height="400">
+  <p>Left image of the door:</p>
+  <img src="./images_b/door_left_feature_descriptors.jpg", height="400">
+  <p>Right image of the door:</p>
+  <img src="./images_b/door_right_feature_descriptors.jpg", height="400">
 
   <h4 id="b3">Part B.3: Feature Matching</h4>
-  <p>TBD</p>
+  <p>To match the feature descriptors between images, the pairwise Euclidean distance between each descriptor in the left image and each descriptor in the right image is computed. Then, Lowe's ratio test is applied to compare the shortest and second shortest distance. If the shortest distance is significantly smaller than the second shortest distance, indicating a strong match between the descriptors, a match is made. This is repeated over all descriptors, obtaining the following feature descriptor correspondences:</p>
+  <img src="./images_b/room_patch_matches.jpg" width="400">
+  <p>Reduced set of feature matches visualized on the original images (for cleaner visuaalization):</p>
+  <img src="./images_b/room_all_matches.jpg" height="300">
+  <p>Feature descriptor correspondences for the door:</p>
+  <img src="./images_b/door_patch_matches.jpg" width="400">
+  <p>Reduced set of feature matches for the door:</p>
+  <img src="./images_b/door_all_matches.jpg" height="400">
+  <p>While most of these matches are accurate, there are still a few that are off. This is handled by one last step.</p>
 
   <h4 id="b4">Part B.4: RANSAC for Robust Homography</h4>
-  <p>TBD</p>
+  <p>The final step for computing the homography automatically is running the RANSAC loop: (1) randomly choose 4 points (minimum needed to compute homography exactly), (2) compute homography, (3) get the number of inliers, (4) update H best on the maximum number of inliers. This is repeated for a certain number of iterations. The reason why this algorithm is necessary at this point is because there may still be some outliers, so by completing many iterations, the optimal homography matrix with the maximum number of inlier points can be found.</p>
+  <p>Once the homography matrix is calculated, the same stitching process is used from part A. The results of part B's automatic (left) and part A's manual (right) stitching for each pair can be seen below:</p>
+  <img src="./images_b/room_mosaic.png" height="300">
+  <img src="./images/pan1_mosaic.jpg" height="300">
+  <br>
+  <img src="./images_b/door_mosaic.png" height="300">
+  <img src="./images/pan2_mosaic.jpg" height="300">
+  <br>
+  <img src="./images_b/curtains_mosaic.png" height="300">
+  <img src="./images/pan3_mosaic.jpg" height="300">
+  <p>For the most part, the results are almost identical, except that the left image was done completely automatically with no manual intervention. This demonstrates that the algorithm presented in the paper is a robust, efficient, and effective method for automatic image alignment and stitching, achieving near-perfect results on its own.</p>
 
   
 
