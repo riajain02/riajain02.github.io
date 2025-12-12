@@ -27,6 +27,17 @@
   <a href="#a1.7.3">Part A.1.7.3</a> <br>
   <a href="#a1.8">Part A.1.8</a> <br>
   <a href="#a1.9">Part A.1.9</a> <br>
+  <a href="#b1.1">Part B.1.1</a> <br>
+  <a href="#b1.2">Part B.1.2</a> <br>
+  <a href="#b1.2.1">Part B.1.2.1</a> <br>
+  <a href="#b1.2.2">Part B.1.2.2</a> <br>
+  <a href="#b1.2.3">Part B.1.2.3</a> <br>
+  <a href="#b2.1">Part B.2.1</a> <br>
+  <a href="#b2.2">Part B.2.2</a> <br>
+  <a href="#b2.3">Part B.2.3</a> <br>
+  <a href="#b2.4">Part B.2.4</a> <br>
+  <a href="#b2.5">Part B.2.5</a> <br>
+  <a href="#b2.6">Part B.2.6</a> <br>
   <br>
   <br>
 
@@ -248,7 +259,73 @@
   <img src="images/dog_cat.png" width="200">
   <p>The following is a hybrid image between "a flower" (low frequencies) and "a woman" (high frequencies):</p>
   <img src="images/flower_woman.png" width="200">
+
+  <br>
+  <br>
+  <br>
+
+  <h3>Part B: Flow Matching from Scratch</h3>
+  <h4>PART B.1: TRAINING A SINGLE-STEP DENOISING U-NET</h4>
+  <h4 id="b1.1">Part B.1.1: Implementing the U-Net</h4>
+  <p>The first step was to implement the U-Net using the following architecture:</p>
+  <img src="images/u_net.png" width="700">
+
+  <h4 id="b1.2">Part B.1.2: Using the U-Net to Train a Denoniser</h4>
+  <p>The following is a visualization of the noising process at various sigma levels:</p>
+  <img src="images/noising_process.png" width="700">
   
+  <h4 id="b1.2.1">Part B.1.2.1: Training</h4>
+  <p>The result of training the U-Net is the following, which shows the denoising results on various images from the test dataset after the first epoch with sigma = 0.5:</p>
+  <img src="images/denoising_results_after_first_epoch.png" width="700">
+  <p>After the fifth epoch:</p>
+  <img src="images/denoising_results_after_fifth_epoch.png" width="700">
+  <p>Training loss curve:</p>
+  <img src="images/training_loss_curve.png" width="400">
+
+  <h4 id="b1.2.2">Part B.1.2.2: Out-of-Distribution Testing</h4>
+  <p>The result of denoising out-of-distribution noised images is:</p>
+  <img src="images/ood_denoising_results.png" width="700">
+
+  <h4 id="b1.2.3">Part B.1.2.3: Denoising Pure Noise</h4>
+  <p>The result of denoising pure noise images after the first epoch is:</p>
+  <img src="images/all_noise_denoising_results_after_first_epoch.png" width="700">
+  <p>After the fifth epoch:</p>
+  <img src="images/all_noise_denoising_results_after_fifth_epoch.png" width="700">
+  <p>These results are observed because we use an MSE loss, which means that the model is trying to learn how to minimize the sum of squared distances, which can be interpreted as the "centroid" or "average" of the dataset. Since these images are various digits, it is essentially learning the "average digit" which is why we end up seeing a blob that has components that are common between many digits. However, as a result, we cannot make out any specific digit, and each denoised image ends up looking like a variation of the same deformed digit.</p>
+
+  <p>Training loss curve:</p>
+  <img src="images/all_noise_training_loss_curve.png" width="400">
+
+  <h4>PART B.2: TRAINING A FLOW MATCHING MODEL</h4>
+  <h4 id="b2.1">Part B.2.1: Adding Time Conditioning to UNet</h4>
+  <p>The next part starts with implementing the conditional U-Net using the following architecture:</p>
+  <img src="images/cond_unet.png" width="700">
+
+  <h4 id="b2.2">Part B.2.2: Training the UNet</h4>
+  <p>Training loss curve:</p>
+  <img src="images/training_curve_time_cond_unet.png" width="400">
+
+  <h4 id="b2.3">Part B.2.3: Sampling from the UNet</h4>
+  <p>Results from the time-conditioned UNet for 1, 5, and 10 epochs:</p>
+  <img src="images/time_cond_unets_sampled.png" width="700">
+
+  <h4 id="b2.4">Part B.2.4: Adding Class-Conditioning to UNet</h4>
+  <p>I added class conditioning to the U-Net so it could be conditioned on the digit (0-9).</p>
+
+  <h4 id="b2.5">Part B.2.5: Training the UNet</h4>
+  <p>Training loss curve:</p>
+  <img src="images/class_cond_loss.png" width="400">
+
+  <h4 id="b2.6">Part B.2.6: Sampling from the UNet</h4>
+  <p>Results from the class-conditioned UNet for 1, 5, and 10 epochs for each digit:</p>
+  <img src="images/class_cond_epoch_1_samples.png" width="700"> <br> <br>
+  <img src="images/class_cond_epoch_5_samples.png" width="700"> <br> <br>
+  <img src="images/class_cond_epoch_10_samples.png" width="700">
+  <p>The last step is to attempt removing the exponential learning rate scheduler without dropping performance. In order to compensate for the loss of the scheduler, I tried decreasing the learning rate to 1e-3 and increasing the number of epochs to 15. This produced the following loss curve and results:</p>
+  <img src="images/loss_curve_no_sched.png" width="400"> <br> <br>
+  <img src="images/epoch_1_no_sched.png" width="700"> <br> <br>
+  <img src="images/epoch_5_no_sched.png" width="700"> <br> <br>
+  <img src="images/epoch_10_no_sched.png" width="700">
 
   <br>
   <br>
